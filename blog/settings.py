@@ -23,13 +23,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'eaf)dc#f(ib3!9#w(q^fk2!@7b9yxtzljvlep(c8msv@2x@2o5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost ', '.taojiaoa.com']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'haystack',
     'comments.apps.CommentsConfig',
     'onefirst.apps.OnefirstConfig',
     'django.contrib.admin',
@@ -101,6 +102,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# 搜索相关配置
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        # ENGINE：指定搜索引擎
+        'ENGINE': 'onefirst.whoosh_cn_backend.WhooshEngine',
+
+        # PATH:制定索引文件位置
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    },
+}
+# 搜索结果进行分页操作
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+
+# 制定什么时候更新索引,haystack.signals.RealtimeSignalProcessor为有文章更新时才更新索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -120,5 +136,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
 # 静态文件收集目录
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

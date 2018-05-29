@@ -34,7 +34,8 @@ def post_comment(request, pk):
         else:
             # 检查到数据不合格，重新渲染详情页，并且渲染表单的错误
             # Post 和 Comment 是Foreignkey 关联的
-            # 所以post.comment_set.all()方法反向查询所有评论
+            # 所以post.comment_set.all()方法反向查询所有评论,获取改篇文章下所有评论
+            # post.comment_set.all 等价与 Comment.objects.filter(post=post)
             comment_list = post.comment_set.all()
             context = {'post': post,
                        'form': form,

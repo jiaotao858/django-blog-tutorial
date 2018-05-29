@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load onefirst_tags %}
+
+{% block main %}
+    {% if error_msg %}
+        <p>{{ error_msg }}</p>
+    {% endif %}
+
+    {% for post in post_list %}
+            <article class="post post-{{ post.pk }}">
+                <header class="entry-header">
+                    <h1 class="entry-title">
+                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                    </h1>
+                    <div class="entry-meta">
+                        <span class="post-category"><a href="#">{{ post.category }}</a></span>
+                        <span class="post-date"><a href="#"><time class="entry-date"
+                                                                  datetime="{{ post.created_time }}">{{ post.created_time }}</time></a></span>
+                        <span class="post-author"><a href="#">{{ post.author }}</a></span>
+                        <span class="comments-link"><a href="#">{{ post.comment_set.count }} 评论</a></span>
+                        <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
+                    </div>
+                </header>
+                <div class="entry-content clearfix">
+                    <p>{{ post.excerpt }}</p>
+                    <div class="read-more cl-effect-14">
+                        <a href="{{ post.get_absolute_url }}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+                    </div>
+                </div>
+            </article>
+        {% empty %}
+            <div class="no-post">暂时还没有发布的文章！</div>
+    {% endfor %}
+
+{#    {% if is_paginated %}#}
+{#        <div class="pagination-simple">#}
+{#        <!--如果当前页还有上一页，显示上一页按钮-->#}
+{#            {% if page_obj.has_previous %}#}
+{#                <a href="?page={{ page_obj.previous_page_number }}">上一页</a>#}
+{#            {% endif %}#}
+{#        <!--显示当前页面信息-->#}
+{#            <span class="current">第 {{ page_obj.number }} 页 / 共 {{ paginator.num_pages }} 页</span>#}
+{#        <!--如果当前页有下一下，显示下一页按钮-->#}
+{#            {% if page_obj.has_next %}#}
+{#                <a href="?page={{ page_obj.next_page_number }}">下一页</a>#}
+{#            {% endif %}#}
+{#        </div>#}
+{#    {% endif %}#}
+
+    {% if is_paginated %}
+    <div class="pagination">
+      {% if first %}
+        <a href="?page=1">1</a>
+      {% endif %}
+      {% if left %}
+        {% if left_has_more %}
+            <span>...</span>
+        {% endif %}
+        {% for i in left %}
+            <a href="?page={{ i }}">{{ i }}</a>
+        {% endfor %}
+      {% endif %}
+      <a href="?page={{ page_obj.number }}" style="color: red">{{ page_obj.number }}</a>
+      {% if right %}
+        {% for i in right %}
+            <a href="?page={{ i }}">{{ i }}</a>
+        {% endfor %}
+        {% if right_has_more %}
+            <span>...</span>
+        {% endif %}
+      {% endif %}
+      {% if last %}
+        <a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
+      {% endif %}
+    </div>
+{% endif %}
+
+    {% block widget %}
+                <!--最新文章 -->
+                <div class="widget widget-recent-posts">
+                    <h3 class="widget-title">最新文章</h3>
+                    {% get_recent_posts as recent_post_list %}
+                    <ul>
+                        {% for post in recent_post_list%}
+                        <li>
+                            <a href={{ post.get_absolute_url }}>{{ post.title }}</a>
+                        </li>
+                        {% empty %}
+                            暂无文章！
+                       {% endfor %}
+                    </ul>
+                </div>
+
+                <!--文章归档 -->
+                <div class="widget widget-archives">
+                    <h3 class="widget-title">归档</h3>
+                    {% archives as date_time %}
+                    <ul>
+                        {% for date in date_time %}
+                        <li>
+                            <a href="{% url 'onefirst:archives' date.year date.month %}">{{ date.year }} 年 {{ date.month }} 月</a>
+                        </li>
+                        {% empty %}
+                            暂无归档分类！
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!--文章分类 -->
+                <div class="widget widget-category">
+                    <h3 class="widget-title">分类</h3>
+                    {% get_categories as category_list %}
+                    <ul>
+                        {% for category in category_list %}
+                        <li>
+                            <a href="{% url 'onefirst:category' category.pk %}">{{ category.name }}
+                                <span class="post-count">({{ category.num_posts }})</span></a>
+                        </li>
+                        {% empty %}
+                            暂无文章分类！
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!--文章标签 -->
+                <div class="widget widget-tag-cloud">
+                    <h3 class="widget-title">标签云</h3>
+                    {% get_tags as tag_list %}
+                    <ul>
+                        {% for tag in tag_list %}
+                        <li>
+                            <a href="{% url 'onefirst:tag' tag.pk %}">{{ tag.name }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!--RSS 订阅 -->
+                <div class="rss">
+                    <a href="{% url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                </div>
+                {% endblock widget%}
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
