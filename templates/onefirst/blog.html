@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+<!--博客页显示不包含右侧部件-->
+{% block main %}
+<div class="content-body">
+			<div class="container">
+				<div class="row">
+					<main class="col-md-12">
+                        {% include 'onefirst/post_list.html' %}
+					</main>
+				</div>
+			</div>
+		</div>
+{% endblock %}
+

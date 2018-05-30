@@ -10,5 +10,9 @@ urlpatterns = [
     url(r'^tag/(?P<pk>[0-9]+)/$', views.TagView.as_view(), name='tag'),
     url(r'^about/$', views.AboutView.as_view(), name='about'),
     url(r'^blog/$', views.BlogView.as_view(), name='blog'),
+    url(r'^contact/$', views.contact, name='contact'),
     # url(r'^search/$', views.search, name='search'),
+    url(r'^login$', views.login_view, name='login'),
+    url(r'^logout', views.logout_view),
+    url(r'^register$', views.register_view, name='register'),
 ]

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{% url 'onefirst:register' %}" method="post" accept-charset="utf-8"enctype="multipart/form-data" >
+   {% csrf_token %}
+    <div>
+        <input type="text" name="username"id="username" placeholder="请输入手机号" >
+        <input type="password"  name="password" id="password" placeholder="请输入6-12位密码" >
+        <input type="submit" class="submit" value="立即注册">
+    </div>
+
+ </form>
+</body>
+</html>

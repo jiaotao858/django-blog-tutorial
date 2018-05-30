@@ -1,5 +1,7 @@
 {% load staticfiles %}
 {% load onefirst_tags %}
+
+<!--系统主模板-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +55,7 @@
                             <li class="cl-effect-11"><a href="{% url 'onefirst:index' %}" data-hover="首页">首页</a></li>
                             <li class="cl-effect-11"><a href="{% url 'onefirst:blog' %}" data-hover="博客">博客</a></li>
                             <li class="cl-effect-11"><a href="{% url 'onefirst:about' %}" data-hover="关于">关于</a></li>
-                            <li class="cl-effect-11"><a href="contact.html" data-hover="联系">联系</a></li>
+                            <li class="cl-effect-11"><a href="{% url 'onefirst:contact' %}" data-hover="联系">联系</a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </nav>
@@ -80,8 +82,8 @@
     <div class="container">
         <div class="row">
 
-            <!--正文部分-->
             <main class="col-md-8">
+            <!--中间正文部分-->
             {% block main %}
             {% endblock %}
             </main>
@@ -92,71 +94,8 @@
                 {% block toc %}
                 {% endblock %}
 
-
+                <!--右侧导航栏 -->
                 {% block widget %}
-                <!--最新文章 -->
-{#                <div class="widget widget-recent-posts">#}
-{#                    <h3 class="widget-title">最新文章</h3>#}
-{#                    {% get_recent_posts as recent_post_list %}#}
-{#                    <ul>#}
-{#                        {% for post in recent_post_list%}#}
-{#                        <li>#}
-{#                            <a href={{ post.get_absolute_url }}>{{ post.title }}</a>#}
-{#                        </li>#}
-{#                        {% empty %}#}
-{#                            暂无文章！#}
-{#                       {% endfor %}#}
-{#                    </ul>#}
-{#                </div>#}
-
-                <!--文章归档 -->
-{#                <div class="widget widget-archives">#}
-{#                    <h3 class="widget-title">归档</h3>#}
-{#                    {% archives as date_time %}#}
-{#                    <ul>#}
-{#                        {% for date in date_time %}#}
-{#                        <li>#}
-{#                            <a href="{% url 'onefirst:archives' date.year date.month %}">{{ date.year }} 年 {{ date.month }} 月</a>#}
-{#                        </li>#}
-{#                        {% empty %}#}
-{#                            暂无归档分类！#}
-{#                        {% endfor %}#}
-{#                    </ul>#}
-{#                </div>#}
-
-                <!--文章分类 -->
-{#                <div class="widget widget-category">#}
-{#                    <h3 class="widget-title">分类</h3>#}
-{#                    {% get_categories as category_list %}#}
-{#                    <ul>#}
-{#                        {% for category in category_list %}#}
-{#                        <li>#}
-{#                            <a href="{% url 'onefirst:category' category.pk %}">{{ category.name }}#}
-{#                                <span class="post-count">({{ category.num_posts }})</span></a>#}
-{#                        </li>#}
-{#                        {% empty %}#}
-{#                            暂无文章分类！#}
-{#                        {% endfor %}#}
-{#                    </ul>#}
-{#                </div>#}
-
-                <!--文章标签 -->
-{#                <div class="widget widget-tag-cloud">#}
-{#                    <h3 class="widget-title">标签云</h3>#}
-{#                    {% get_tags as tag_list %}#}
-{#                    <ul>#}
-{#                        {% for tag in tag_list %}#}
-{#                        <li>#}
-{#                            <a href="{% url 'onefirst:tag' tag.pk %}">{{ tag.name }}</a>#}
-{#                        </li>#}
-{#                        {% endfor %}#}
-{#                    </ul>#}
-{#                </div>#}
-
-                <!--RSS 订阅 -->
-{#                <div class="rss">#}
-{#                    <a href="{% url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>#}
-{#                </div>#}
                 {% endblock widget%}
 
             </aside>
